@@ -1,8 +1,4 @@
-// Global app controller
-
-// import { add, multiply, ID } from './views/searchView';   // import named export, multiple things
-
-import {elements} from './views/base';
+import {elements, renderLoader, clearLoader} from './views/base';
 import Search from './models/Search'; 
 import * as searchView from './views/searchView';
 
@@ -33,13 +29,21 @@ const controlSearch = async() => {
     // 3) Prepare UI for results
     searchView.clearInput();
     searchView.clearResults();
+    renderLoader(elements.searchRes);
 
-    // 4) Seach for recipes
-    await state.search.getResults();
+    try {
+      // 4) Seach for recipes
+      await state.search.getResults();
 
-    // 5) Render result on UI
-    // console.log(state.search.result);
-    searchView.renderResults(state.search.result);
+      // 5) Render result on UI
+      clearLoader();
+      // console.log(state.search.result);
+      searchView.renderResults(state.search.result);
+    } catch(err) {
+      alert('Wront with search...');
+      clearLoader();
+    }
+    
   }
 }
 
