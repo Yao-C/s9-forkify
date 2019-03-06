@@ -11,7 +11,7 @@ export default class Search {
     
     try {
       const res = await axios(`${proxy}${searchAPI}?key=${key}&query=${this.query}`);
-      this.result = res.data.recipes;
+      this.result = res.data.recipes; // Instead of get a single res, it is better to be an attribute inside Search
       console.log(this.result);
     } catch(error) {
       alert(error);
