@@ -1,6 +1,6 @@
 import axios from 'axios';
-//import {proxy, recipeAPI, key} from '../config';
-import {proxy, recipeAPI, key2} from '../config';
+import {proxy, recipeAPI} from '../config';
+import {key2} from '../keys';
 
 export default class Recipe {
   constructor(id) {
@@ -43,7 +43,7 @@ export default class Recipe {
     const newIngredients = this.ingredients.map (el => {
       // 1) Uniform units
       let ingredient = el.toLowerCase();
-      debugger;
+      // debugger;
       unitsLong.forEach((unit, i) => {
         ingredient = ingredient.replace(unit, unitsShort[i]);
       });
