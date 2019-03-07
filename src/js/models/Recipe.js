@@ -18,17 +18,19 @@ export default class Recipe {
     } catch(error) {
       alert(error);
     }
-
-    // Assume every three ingredients need 15mins
-    calcTime() {
-      const numIng = this.ingredients.length;
-      const periods = Math.ceil(numIng / 3);
-      this.time = periods * 15;
-    }
-
-    // Assume for 4 personer
-    calcServings() {
-      this.servings = 4;
-    }
   }
-}
+
+  // Assume every three ingredients need 15mins
+  calcTime() {
+    const numIng = this.ingredients.length;
+    const periods = Math.ceil(numIng / 3);
+    this.time = periods * 15;
+  }
+
+  // Assume for 4 personer
+  calcServings() {
+    this.servings = 4;
+  }
+
+} // end of class Recipe
+
