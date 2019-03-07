@@ -94,5 +94,16 @@ export default class Recipe {
     return this.ingredients = newIngredients;
   } // end of parseIngredients
 
+  // type is button decrease or increase in recipeView.js
+  updateServings(type) {
+    // Serverings
+    const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+
+    // Ingredients
+    this.ingredients.forEach(ing => ing.count *= newServings / this.servings);
+
+    this.servings = newServings;
+  }  
+
 } // end of class Recipe
 
