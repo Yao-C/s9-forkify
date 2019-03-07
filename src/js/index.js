@@ -1,5 +1,6 @@
 import {elements, renderLoader, clearLoader} from './views/base';
 import Search from './models/Search'; 
+import Recipe from './models/Recipe'; 
 import * as searchView from './views/searchView';
 
 /*******************
@@ -13,9 +14,9 @@ import * as searchView from './views/searchView';
  const state = {};
 
 
- /********************
-  * Search Controller
-  */
+/********************
+* Search Controller
+*/
 
 const controlSearch = async() => {
   // 1) Get query from view
@@ -30,7 +31,7 @@ const controlSearch = async() => {
     searchView.clearInput();
     searchView.clearResults();
     renderLoader(elements.searchRes);
-
+    // debugger;
     try {
       // 4) Seach for recipes
       await state.search.getResults();
@@ -40,7 +41,7 @@ const controlSearch = async() => {
       // console.log(state.search.result);
       searchView.renderResults(state.search.result);
     } catch(err) {
-      alert('Wront with search...');
+      alert('Wrong with search...');
       clearLoader();
     }
     
@@ -60,3 +61,12 @@ elements.searchResPages.addEventListener('click', e => {
     searchView.renderResults(state.search.result, goTOPage);
   }
 });
+
+/********************
+* Recipe Controller
+*/
+
+const r = new Recipe(35382);
+r.getRecipe();
+console.log(r);
+
