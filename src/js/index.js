@@ -2,9 +2,11 @@ import {elements, renderLoader, clearLoader} from './views/base';
 import Search from './models/Search'; 
 import Recipe from './models/Recipe'; 
 import List from './models/List'; 
+import Likes from './models/Likes'; 
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
+import * as likesView from './views/likesView';
 
 /*******************
  *** Global state of the app
@@ -97,7 +99,7 @@ const controlRecipe = async() => {
       // Render recipe
       //console.log(state.recipe);
       clearLoader();
-      recipeView.renderRecipe(state.recipe);
+      recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
     } catch(err) {
       console.log(err);
     }
@@ -125,9 +127,9 @@ const controlList = () => { // Called in recipe button handle
 // Handle delete and update list item events - own
 elements.shopping.addEventListener('click', e => {
   const id = e.target.closest('.shopping__item').dataset.itemid;
-  // debugger;
+  //debugger;
   // Delete button
-  if (e.target.matches('.shopping__detele, .shopping__detele *')) {
+  if (e.target.matches('.shopping__delete, .shopping__delete *')) {
     // Delete from state
     state.list.deleteItem(id);
     
@@ -138,6 +140,39 @@ elements.shopping.addEventListener('click', e => {
     state.list.updateCount(id, val);
   }
 });
+
+/********************
+* Likes Controller
+*/
+state.likes = new Likes(); // fix isLiked of undefined first, for testing
+likesView.toggleLikeMenu(state.likes.getLikesNum()); // For loading is not showing also, testing
+
+const controlLike = () => {
+  if (!state.likes) state.likes = new Likes();
+
+  const currentID = state.recipe.id;
+  if (!state.likes.isLiked(currentID)) { // Not like
+    // Add like to state
+    const newLike = state.likes.addLike(currentID, state.recipe.title, state.recipe.author, state.recipe.img);
+    
+    // Toggle like button
+    likesView.toggleLikeBtn(true); // icon-heart
+    // Add like to UI list
+    //console.log(state.likes);
+    likesView.renderLike(newLike);
+  } else {                             // Liked
+    // Remove like from state
+    state.likes.deleteLike(currentID);
+    // Toggle like from button
+    likesView.toggleLikeBtn(false); // icon-heart-outlined
+    // Remove like from UI list
+    //console.log(state.likes);
+    likesView.deleteLike(currentID);
+  }
+
+  likesView.toggleLikeMenu(state.likes.getLikesNum());
+};
+
 
 
 // Handle recipe button clicks
@@ -152,5 +187,7 @@ elements.recipe.addEventListener('click', e => {
     recipeView.updateServingsView(state.recipe);
   } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
     controlList();
+  } else if (e.target.matches('.recipe__love, .recipe__love *')) {
+    controlLike();
   }
 });

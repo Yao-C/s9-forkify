@@ -17,7 +17,7 @@ const formatCount = count => {  // Called in createIngredient
   return '?' // Instead of undefined
 }; // end for clearRecipe
 
-export const renderRecipe = recipe => {
+export const renderRecipe = (recipe, isLiked) => {
   const createIngredient = ingredient => `
     <li class="recipe__item">
       <svg class="recipe__icon">
@@ -70,7 +70,7 @@ export const renderRecipe = recipe => {
       </div>
       <button class="recipe__love">
           <svg class="header__likes">
-              <use href="img/icons.svg#icon-heart-outlined"></use>
+              <use href="img/icons.svg#icon-heart${isLiked ? '' : '-outlined'}"></use>
           </svg>
       </button>
    </div>

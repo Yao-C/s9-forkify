@@ -10,10 +10,10 @@ export const clearResults = () => {
 export const highlightSelected = id => {
   const resultArr = Array.from(document.querySelectorAll('.results__link'));
   resultArr.forEach(el => el.classList.remove('results__link--active')); // Delete the old first
-  document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active'); // Add to current
+  document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active'); // Add to current
 };
 
-const limitRecipeTitle = (title, limit=17) => {
+export const limitRecipeTitle = (title, limit=17) => {
   const newTitle = [];
   if(title.length > limit) {
     title.split(' ').reduce((acc, cur) => { //accumlator with original value 0, current: each item inside title split
