@@ -78,6 +78,7 @@ const controlRecipe = async() => {
   if(id) {
     // Prepare UI for changes
     recipeView.clearRecipe();
+    listView.clearList();
     renderLoader(elements.recipe)
 
     // Highlight selected search item
@@ -144,8 +145,9 @@ elements.shopping.addEventListener('click', e => {
 /********************
 * Likes Controller
 */
-state.likes = new Likes(); // fix isLiked of undefined first, for testing
-likesView.toggleLikeMenu(state.likes.getLikesNum()); // For loading is not showing also, testing
+// In window load now
+// state.likes = new Likes(); // fix isLiked of undefined first, for testing
+// likesView.toggleLikeMenu(state.likes.getLikesNum()); // For loading is not showing also, testing
 
 const controlLike = () => {
   if (!state.likes) state.likes = new Likes();
@@ -173,6 +175,14 @@ const controlLike = () => {
   likesView.toggleLikeMenu(state.likes.getLikesNum());
 };
 
+
+// Restore liked recipes on page load
+window.addEventListener('load', () => {
+  state.likes = new Likes();
+  state.likes.readStorage(); // Restore likes
+  likesView.toggleLikeMenu(state.likes.getLikesNum());
+  state.likes.likes.forEach(like => likesView.renderLike(like));
+});
 
 
 // Handle recipe button clicks
