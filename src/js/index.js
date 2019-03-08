@@ -76,6 +76,7 @@ const controlRecipe = async() => {
   const id = window.location.hash.replace('#', '');
 
   if(id) {
+    if (state.list) state.list.items = [];
     // Prepare UI for changes
     recipeView.clearRecipe();
     listView.clearList();

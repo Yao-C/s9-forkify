@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {proxy, recipeAPI} from '../config';
+import {key} from '../keys';
 //import {key2} from '../keys';
-import {key3} from '../keys';
+//import {key3} from '../keys';
 
 export default class Recipe {
   constructor(id) {
@@ -10,9 +11,9 @@ export default class Recipe {
 
   async getRecipe() {
     try {
-      //const res = await axios(`${proxy}${recipeAPI}?key=${key}&rId=${this.id}`);
+      const res = await axios(`${proxy}${recipeAPI}?key=${key}&rId=${this.id}`);
       //const res = await axios(`${proxy}${recipeAPI}?key=${key2}&rId=${this.id}`);
-      const res = await axios(`${proxy}${recipeAPI}?key=${key3}&rId=${this.id}`);
+      //const res = await axios(`${proxy}${recipeAPI}?key=${key3}&rId=${this.id}`);
       this.title = res.data.recipe.title;
       this.author = res.data.recipe.publisher;
       this.img = res.data.recipe.image_url;
